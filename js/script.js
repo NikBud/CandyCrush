@@ -1,4 +1,4 @@
-import Grille from "./grille.js"
+import Grille from "/CandyCrush/js/grille.js"
 
 // 1 On définit une sorte de "programme principal"
 // le point d'entrée du code qui sera appelée dès que la
