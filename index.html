@@ -5,17 +5,30 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/styles.css">
     <script src="lib/lodash.js"></script>
-    <script type="module" src="/CandyCrush/js/script.js"></script>
+    <script type="module" src="./js/script.js"></script>
 </head>
 
 <body>
-    <H1>Jeu type candy crush... version avec utilisation de divs</H1>
+    <div id="helloPage">
+        <h1 class="title">Bienvenue dans <span class="candy-text">Candy Crush</span> ! 🍬</h1>
+        
+        <div id="scoreBoard">
+            <h2>🏆 Classement des meilleurs joueurs</h2>
+            <ul id="scoreList">
+                <li>Chargement des scores...</li>
+            </ul>
+        </div>
+    
+        <button id="startGameBtn">🚀 Commencer le jeu !</button>
+    </div>
     <div id="main">
         <div id="infos">
-            <div>Temps : 0</div>
-            <div>Score : 0</div>
-            <div>Niveau : 0</div>
+            <div id="time">Time : 00:00</div>
+            <div id="score">Score : 0</div>
         </div>
+        <div id="progress"></div>
+        <div id="levelDiv">Current Level: 1</div>
+        <p id="progressTxt">Your progress</p>
         <div id="grille">
             <div></div>
             <div></div>
@@ -99,6 +112,11 @@
             <div></div>
             <div></div>
         </div>
+    </div>
+    <div id="endGameDiv">
+        <h1>🎉 Congratulations! 🎉</h1>
+        <p>You have successfully completed the game! Thank you for playing. 😊</p>
+        <button id="restartGame">🔄 Play Again</button>
     </div>
 </body>
 

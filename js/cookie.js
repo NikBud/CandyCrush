@@ -11,7 +11,7 @@ export default class Cookie {
     "./assets/images/Donut@2x.png",
     "./assets/images/Macaroon@2x.png",
     "./assets/images/SugarCookie@2x.png",
-    "./assets/images/stop.webp"
+    "./assets/images/cookie.png"
   ];
   static urlsImagesSurlignees = [
     "./assets/images/Croissant-Highlighted@2x.png",
@@ -20,13 +20,14 @@ export default class Cookie {
     "./assets/images/Donut-Highlighted@2x.png",
     "./assets/images/Macaroon-Highlighted@2x.png",
     "./assets/images/SugarCookie-Highlighted@2x.png",
-    "./assets/images/stop.webp"
+    "./assets/images/cookie.png"
   ];
 
   constructor(type, ligne, colonne) {
     this.type = type;
     this.ligne = ligne;
     this.colonne = colonne;
+    this.eliminationCandidate = false;
 
     // On récupère l'URL de l'image correspondant au type
     // qui est un nombre entre 0 et 5
@@ -113,6 +114,11 @@ export default class Cookie {
     tmp = c1.htmlImage.src;
     c1.htmlImage.src = c2.htmlImage.src;
     c2.htmlImage.src = tmp;
+
+    // We change elimination candidate field
+    let boolTmp = c1.eliminationCandidate;
+    c1.eliminationCandidate = c2.eliminationCandidate;
+    c2.eliminationCandidate = boolTmp;
   }
 
   /** renvoie la distance au sens "nombre de cases" 

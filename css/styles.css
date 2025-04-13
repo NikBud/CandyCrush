@@ -7,6 +7,7 @@
 #infos {
     width: 800px;
     display: flex;
+    border-bottom: 3px black solid;
     justify-content: space-around;
 }
 
@@ -14,6 +15,27 @@
     /* https://css-tricks.com/almanac/properties/j/justify-content/ */
     font-size: 40px;
     color: rgb(133, 47, 47);
+}
+
+#progress{
+    height: 50px;
+    width: 0px;
+    background-color: #4CAF50;
+    text-align: center;
+    transition: width 0.5s ease-in-out;
+}
+
+#progressTxt{
+    position: absolute;
+    top: 65px;
+    left: 330px;
+    font-size: 30px;
+    margin: 0;
+}
+
+#levelDiv{
+    font-size: 30px;
+    text-align: center;
 }
 
 #grille {
@@ -41,7 +63,7 @@
 }
 
 .grilleDragOver {
-    background-color: pink;
+    background-color: rgb(0, 203, 0);
 }
 
 .cookies {
@@ -64,4 +86,146 @@
 
 .eliminationCandidate{
     box-shadow: 0 0 20px 10px red;
+}
+ 
+/* #helloPage{
+    display: none;
+}  */
+
+
+#helloPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.candy-text {
+    color: #ff6f61;
+    font-size: 42px;
+    text-shadow: 2px 2px 5px rgba(255, 50, 50, 0.5);
+}
+
+
+#scoreBoard {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    width: 90%;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+}
+
+#scoreBoard h2 {
+    color: #2d7d2d;
+    font-size: 24px;
+    margin-bottom: 8%;
+    text-align: center;
+}
+
+#scoreList {
+    list-style: none;
+    padding: 0;
+    font-size: 22px;
+}
+
+#scoreList li {
+    font-size: 20px;
+    padding: 8px;
+    color: #555;
+    margin-bottom: 3%;
+}
+
+#startGameBtn {
+    background: linear-gradient(45deg, #4CAF50, #2e7d32);
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 30px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#startGameBtn:hover {
+    background: linear-gradient(45deg, #2e7d32, #4CAF50);
+    transform: scale(1.1);
+}
+
+#endGameDiv{
+    display: none;
+}
+
+#endGameDiv {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 500px;
+    background: linear-gradient(to right, #4CAF50, #8BC34A);
+    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    font-family: Arial, sans-serif;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+#endGameDiv h1 {
+    font-size: 32px;
+    margin-bottom: 35px;
+}
+
+#endGameDiv p {
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+#restartGame {
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #4CAF50;
+    font-weight: bold;
+    transition: background 0.3s, color 0.3s;
+}
+
+#restartGame:hover {
+    background-color: #235224;
+    color: white;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
 }
