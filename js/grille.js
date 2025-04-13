@@ -1,5 +1,5 @@
 import Cookie from "./cookie.js";
-import { create2DArray } from "./utils.js";
+import { create2DArray, handleEndOfTheGame } from "./utils.js";
 
 /* Classe principale du jeu, c'est une grille de cookies. Le jeu se joue comme
 Candy Crush Saga etc... c'est un match-3 game... */
@@ -21,7 +21,8 @@ export default class Grille {
     this.currentScore = 0;
     this.progressBarCounter = 0;
     this.currentLevel = 1;
-    this.levelMultiplier = [8, 6, 4, 2];
+    // this.levelMultiplier = [8, 6, 4, 2];
+    this.levelMultiplier = [12, 10, 10, 10];
     this.matchedCookies = [];
   }
 
@@ -167,7 +168,10 @@ export default class Grille {
 
     if (this.matchedCookies.length > 0) {
         if (!ignoreScore) {
-          this.updateScore();
+          let isNewLevel = this.updateScore();
+          if (isNewLevel) {
+            return;
+          }
         }
         this.startAnumationAndEliminateCookies(ignoreScore);
     }
@@ -235,14 +239,6 @@ export default class Grille {
         }
       });
     }
-  }
-
-  detectCombinationChanging(cookie){
-    this.matchedCookies.forEach((cks) => {
-      if(cookie.ligne == cks.ligne && (cookie.colonne == cks.colonne || Math.abs(cookie.colonne - cks.colonne) == 1 || Math.abs(cookie.colonne - cks.colonne) == 2)){
-        cks.htmlImage.classList.remove("eliminationCandidate");
-      }
-    })
   }
 
   async eliminateCookie() {
@@ -320,7 +316,7 @@ export default class Grille {
     this.progressBarCounter += this.matchedCookies.length;
     let scoreDiv = document.getElementById("score");
     scoreDiv.textContent = `Score: ${this.currentScore}`;
-    this.updateProgressBar();
+    return this.updateProgressBar();
   }
 
   updateProgressBar() {
@@ -340,15 +336,17 @@ export default class Grille {
       });
 
       this.updateCurrentLevel();
-      this.handleEndOfTheGame();
+      handleEndOfTheGame(this.currentLevel);
       this.tabcookies = this.remplirTableauDeCookies();
-      this.showCookies();
+      this.showCookies(true);
+      this.startAnumationAndEliminateCookies(true);
       this.progressBarCounter = 0;
+      return true;
     }
     else{
       progressBar.style.width = futureBarWidth + "px";
+      return false;
     }
-    
   }
 
   saveScoreOnEachReload() {
@@ -387,19 +385,4 @@ export default class Grille {
     levelDiv.innerText = `Current level: ${this.currentLevel}`;
   }
 
-  handleEndOfTheGame(){
-    if (this.currentLevel == 5){
-      setTimeout(() => {
-        let main = document.getElementById("main");
-        let endPage = document.getElementById("endGameDiv");
-        let restartBtn = document.getElementById("restartGame");
-
-        main.style.display = "none";
-        endPage.style.display = "block";
-        restartBtn.addEventListener("click", () => {
-          location.reload();
-        });
-      }, 300);
-    }
-  }
 }

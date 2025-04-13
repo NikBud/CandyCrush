@@ -1,4 +1,4 @@
-export { create2DArray };
+export { create2DArray, handleEndOfTheGame };
 
 /** En JavaScript on ne peut pas déclarer directement de tableau à n dimensions
    en précisant toutes les dimensions. tab [4][4] n'est pas possible par exemple.
@@ -14,5 +14,21 @@ function create2DArray(rows) {
   }
 
   return arr;
+}
+
+function handleEndOfTheGame(currentLevel) {
+  if (currentLevel == 5){
+    setTimeout(() => {
+      let main = document.getElementById("main");
+      let endPage = document.getElementById("endGameDiv");
+      let restartBtn = document.getElementById("restartGame");
+
+      main.style.display = "none";
+      endPage.style.display = "block";
+      restartBtn.addEventListener("click", () => {
+        location.reload();
+      });
+    }, 300);
+  }
 }
 
