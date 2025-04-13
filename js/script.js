@@ -32,7 +32,7 @@ function startGame() {
   grille = new Grille(9, 9);
   grille.saveScoreOnEachReload();
   grille.showCookies();
-  grille.detecterMatchDansGrilleBeginning();
+  grille.detecterMatchDansGrille(true);
 }
 
 function startTimer() {

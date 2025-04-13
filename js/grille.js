@@ -31,7 +31,7 @@ export default class Grille {
    * écouteurs de click et de drag'n'drop pour pouvoir interagir avec elles
    * et implémenter la logique du jeu.
    */
-  showCookies() {
+  showCookies(ignoreScore = false) {
     let caseDivs = document.querySelectorAll("#grille div");
 
     caseDivs.forEach((div, index) => {
@@ -76,7 +76,7 @@ export default class Grille {
             
             Cookie.swapCookies(this.cookieSelectionnes[0], this.cookieSelectionnes[1]);  
             
-            this.detecterMatchDansGrille();
+            this.detecterMatchDansGrille(ignoreScore);
             
             // dans tous les cas (swap ou pas) on vide le tableau
             this.cookieSelectionnes = [];
@@ -92,14 +92,9 @@ export default class Grille {
     });
   }
 
-  async startAnumationAndEliminateCookies() {
+  async startAnumationAndEliminateCookies(ignoreScore = false) {
     await this.eliminateCookie();
-    this.updateCookiesColumn();
-  }
-
-  async startAnumationAndEliminateCookiesStart() {
-    await this.eliminateCookie();
-    this.updateCookiesColumnStart();
+    this.updateCookiesColumn(ignoreScore);
   }
 
   implementDragNDrop(img, div) {
@@ -159,7 +154,7 @@ export default class Grille {
     return tab;
   }
 
-  detecterMatchDansGrille() {
+  detecterMatchDansGrille(ignoreScore = false) {
     this.matchedCookies = [];
 
     for (let l = 0; l < this.l; l++) {
@@ -171,27 +166,12 @@ export default class Grille {
     }
 
     if (this.matchedCookies.length > 0) {
-        this.updateScore();
-        this.startAnumationAndEliminateCookies();
-    }
-  }
-
-  detecterMatchDansGrilleBeginning() {
-    this.matchedCookies = [];
-
-    for (let l = 0; l < this.l; l++) {
-        for (let c = 0; c < this.c; c++) {
-            let cookie = this.tabcookies[l][c];
-            this.detecterMatch3Lignes(cookie);
-            this.detecterMatch3Colonnes(cookie);
+        if (!ignoreScore) {
+          this.updateScore();
         }
-    }
-
-    if (this.matchedCookies.length > 0) {
-        this.startAnumationAndEliminateCookiesStart();
+        this.startAnumationAndEliminateCookies(ignoreScore);
     }
   }
-
 
   detecterMatch3Lignes(cookie) {
     let mainType = cookie.type;
@@ -289,7 +269,7 @@ export default class Grille {
     }));
   }
 
-  updateCookiesColumn(){
+  updateCookiesColumn(ignoreScore = false){
     let maxLine = 0;
     let columns = Array(this.matchedCookies.map(cookie => cookie.colonne));
     let columnsToUpdate = Array.from(new Set(columns[0]));
@@ -332,56 +312,8 @@ export default class Grille {
     })
 
     this.matchedCookies = [];
-    this.detecterMatchDansGrille();
+    this.detecterMatchDansGrille(ignoreScore);
   }
-
-
-  updateCookiesColumnStart(){
-    let maxLine = 0;
-    let columns = Array(this.matchedCookies.map(cookie => cookie.colonne));
-    let columnsToUpdate = Array.from(new Set(columns[0]));
-
-    this.matchedCookies.forEach(cookie => {
-      cookie.eliminationCandidate = true;
-    })
-
-    columnsToUpdate.forEach(column => {
-      let matchedCookiesForColumn = this.matchedCookies.filter(c => c.colonne == column);
-      maxLine = 0
-      matchedCookiesForColumn.forEach((cookie) => {
-        if (cookie.ligne > maxLine){
-          maxLine = cookie.ligne;
-        }
-      })
-      
-      // let currentLineToReplace = maxLine - matchedCookiesForColumn.length;
-      let currentLineToReplace = maxLine;
-      while(currentLineToReplace >= 0 && this.tabcookies[currentLineToReplace][column].eliminationCandidate){
-        currentLineToReplace--;
-      }
-      while(maxLine >= 0 && currentLineToReplace >= 0){
-        if (this.tabcookies[currentLineToReplace][column].eliminationCandidate){
-          currentLineToReplace--;
-          continue;
-        }
-
-        Cookie.swapCookiesDistanceMoreThanOne(this.tabcookies[maxLine][column], this.tabcookies[currentLineToReplace][column]);
-  
-        maxLine--;
-        currentLineToReplace--;
-      }
-
-      // ?. Maybe make with all column ???
-      while(maxLine >= 0){
-        this.tabcookies[maxLine][column].eliminationCandidate = false;
-        maxLine--;
-      }
-    })
-
-    this.matchedCookies = [];
-    this.detecterMatchDansGrilleBeginning();
-  }
-
 
   updateScore() {
     this.currentScore += this.matchedCookies.length;
