@@ -68,7 +68,7 @@ function showTopScores() {
   
   scores.forEach((entry, index) => {
       let medal = medals[index] || "🎖";
-      html += `<li>${medal} ${entry.score} points <br> ⏳ ${entry.date}</li>`;
+      html += `<li>${medal} ${entry.score} points <br> ${entry.date}</li>`;
   });
 
   scoreList.innerHTML = html;

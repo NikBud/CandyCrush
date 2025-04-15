@@ -1,9 +1,6 @@
 import Cookie from "./cookie.js";
 import { create2DArray, handleEndOfTheGame } from "./utils.js";
 
-/* Classe principale du jeu, c'est une grille de cookies. Le jeu se joue comme
-Candy Crush Saga etc... c'est un match-3 game... */
-
 let nbDeCookiesDifferents = 4
 
 export default class Grille {
@@ -63,7 +60,6 @@ export default class Grille {
           return;
         }
 
-        // highlight + changer classe CSS
         cookie.selectionnee();        
 
         let nbCookiesSelectionnes = this.cookieSelectionnes.length;
@@ -174,6 +170,9 @@ export default class Grille {
           }
         }
         this.startAnumationAndEliminateCookies(ignoreScore);
+    }
+    else{
+      Cookie.swapCookies(this.cookieSelectionnes[1], this.cookieSelectionnes[0]); 
     }
   }
 
